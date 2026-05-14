@@ -15,6 +15,12 @@ import { authClient } from "../../lib/auth-client";
 import { redirect } from "next/navigation";
 
 const SignUpPage = () => {
+  const handleGoogleButton = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -37,7 +43,7 @@ const SignUpPage = () => {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="max-w-150 p-10 outline outline-[#eeeeeeee]">
-        <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+        <Form className="flex w-96 flex-col gap-4 mb-2" onSubmit={onSubmit}>
           {/* Full Name  */}
           <TextField isRequired name="name" type="text">
             <Label>Full Name</Label>
@@ -107,26 +113,28 @@ const SignUpPage = () => {
 
           <div className="flex items-center">
             <div className="flex-1 h-px bg-gray-300"></div>
-            <p className="text-[#6C696D]">Or sign up with</p>
+            <p className="text-[#6C696D]">Or continue with</p>
             <div className="flex-1 h-px bg-gray-300"></div>
           </div>
+        </Form>
 
-          <div>
-            <Button
-              type="button"
-              className="rounded-none w-full bg-transparent text-[#0C0B0B] border border-[#eeeeee]"
-            >
-              <Image
-                src={`/assets/destinations/google.png`}
-                width={20}
-                height={20}
-                alt="This is google icon"
-                priority
-              ></Image>
-              Sign Up With Google
-            </Button>
+        <div>
+          <Button
+            onClick={handleGoogleButton}
+            type="button"
+            className="rounded-none w-full bg-transparent text-[#0C0B0B] border border-[#eeeeee]"
+          >
+            <Image
+              src={`/assets/destinations/google.png`}
+              width={20}
+              height={20}
+              alt="This is google icon"
+              priority
+            ></Image>
+            Sign In With Google
+          </Button>
 
-            <div className="text-center mt-6">
+          {/* <div className="text-center mt-6">
               Already have an account?{" "}
               <Link
                 href={`/logIn`}
@@ -134,9 +142,8 @@ const SignUpPage = () => {
               >
                 Sign In
               </Link>
-            </div>
-          </div>
-        </Form>
+            </div> */}
+        </div>
       </div>
     </div>
   );

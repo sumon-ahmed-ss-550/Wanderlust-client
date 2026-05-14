@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   Label,
+  Separator,
   TextField,
 } from "@heroui/react";
 import Image from "next/image";
@@ -16,6 +17,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const SignInPage = () => {
+  const handleGoogleButton = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -42,7 +49,7 @@ const SignInPage = () => {
           </p>
         </div>
         <div className="p-10 outline outline-[#eeeeeeee]">
-          <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+          <Form className="flex w-96 flex-col gap-4 mb-2" onSubmit={onSubmit}>
             {/* Email */}
             <TextField
               isRequired
@@ -90,7 +97,7 @@ const SignInPage = () => {
               <FieldError />
             </TextField>
 
-            <div>
+            {/* <div>
               <Checkbox id="basic-terms">
                 <Checkbox.Control className="border border-[#6C696D]">
                   <Checkbox.Indicator />
@@ -99,7 +106,7 @@ const SignInPage = () => {
                   <Label htmlFor="basic-terms">Remember me</Label>
                 </Checkbox.Content>
               </Checkbox>
-            </div>
+            </div> */}
 
             <div>
               <Button
@@ -115,23 +122,25 @@ const SignInPage = () => {
               <p className="text-[#6C696D]">Or continue with</p>
               <div className="flex-1 h-px bg-gray-300"></div>
             </div>
+          </Form>
 
-            <div>
-              <Button
-                type="button"
-                className="rounded-none w-full bg-transparent text-[#0C0B0B] border border-[#eeeeee]"
-              >
-                <Image
-                  src={`/assets/destinations/google.png`}
-                  width={20}
-                  height={20}
-                  alt="This is google icon"
-                  priority
-                ></Image>
-                Sign Up With Google
-              </Button>
+          <div>
+            <Button
+              onClick={handleGoogleButton}
+              type="button"
+              className="rounded-none w-full bg-transparent text-[#0C0B0B] border border-[#eeeeee]"
+            >
+              <Image
+                src={`/assets/destinations/google.png`}
+                width={20}
+                height={20}
+                alt="This is google icon"
+                priority
+              ></Image>
+              Sign In With Google
+            </Button>
 
-              <div className="text-center mt-6">
+            {/* <div className="text-center mt-6">
                 Do not have an account?{" "}
                 <Link
                   href={`/logIn`}
@@ -139,9 +148,8 @@ const SignInPage = () => {
                 >
                   Sign Up
                 </Link>
-              </div>
-            </div>
-          </Form>
+              </div> */}
+          </div>
         </div>
       </div>
     </div>
