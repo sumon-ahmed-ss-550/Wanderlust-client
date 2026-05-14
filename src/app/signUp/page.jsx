@@ -1,5 +1,4 @@
 "use client";
-import { Eye, EyeSlash } from "@gravity-ui/icons";
 import {
   Button,
   Description,
@@ -29,7 +28,7 @@ const SignUpPage = () => {
     });
 
     if (data) {
-      redirect("/");
+      redirect("/signIn");
     }
 
     console.log({ data, error });

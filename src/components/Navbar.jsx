@@ -1,6 +1,8 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Person } from "@gravity-ui/icons";
+import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -9,6 +11,13 @@ import { RiMenu2Fill } from "react-icons/ri";
 
 const Navbar = () => {
   const [toggle, isToggle] = useState(false);
+
+  const { data: session } = authClient.useSession();
+  const info = session?.user;
+
+  const handleSignOutButton = async () => {
+    await authClient.signOut();
+  };
 
   const linkOne = (
     <>
@@ -60,22 +69,45 @@ const Navbar = () => {
           </div>
         </Link>
       </li>
-      <li>
-        <Link
-          className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
-          href={`/login`}
-        >
-          Login
-        </Link>
-      </li>
-      <li>
-        <Link
-          className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
-          href={`/signUp`}
-        >
-          Sign Up
-        </Link>
-      </li>
+
+      {info ? (
+        <div className="flex items-center gap-2">
+          <li>
+            <p>{info?.name}</p>
+          </li>
+          <li>
+            <Avatar>
+              <Avatar.Image alt="John Doe" src={info?.image} />
+              <Avatar.Fallback>{info?.name.charAt(0)}</Avatar.Fallback>
+            </Avatar>
+          </li>
+          <li>
+            <Button variant="danger" onClick={handleSignOutButton}>
+              Sign out
+            </Button>
+          </li>
+        </div>
+      ) : (
+        <div className="flex items-center gap-8">
+          <li>
+            <Link
+              className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
+              href={`/signIn`}
+            >
+              Login
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
+              href={`/signUp`}
+            >
+              Sign Up
+            </Link>
+          </li>
+        </div>
+      )}
     </>
   );
 
