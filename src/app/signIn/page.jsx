@@ -113,7 +113,7 @@ const SignInPage = () => {
                 type="submit"
                 className="rounded-none w-full bg-[#15A1BF]"
               >
-                Create Account
+                Log In
               </Button>
             </div>
 

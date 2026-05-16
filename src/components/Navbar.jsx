@@ -40,7 +40,7 @@ const Navbar = () => {
       <li>
         <Link
           className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
-          href={`/myBookings`}
+          href={`/myBooking`}
         >
           My Bookings
         </Link>
@@ -55,7 +55,6 @@ const Navbar = () => {
       </li>
     </>
   );
-
   const linkTwo = (
     <>
       <li>
@@ -63,10 +62,12 @@ const Navbar = () => {
           className="font-medium text-base leading-6 tracking-[0.5%] text-[#0C0B0B]"
           href={`/profile`}
         >
-          <div className="flex items-center gap-1">
-            <Person></Person>
-            Profile
-          </div>
+          {info && (
+            <div className="flex items-center gap-1">
+              <Person></Person>
+              Profile
+            </div>
+          )}
         </Link>
       </li>
 

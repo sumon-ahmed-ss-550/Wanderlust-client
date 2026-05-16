@@ -8,10 +8,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { GrLocation } from "react-icons/gr";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import MyDestination from "@/components/MyDestination";
 
 const DetailsPage = async ({ params }) => {
   const { userId } = await params;
-  const data = await getOneData(userId);
+  const information = await getOneData(userId);
 
   return (
     <div className="max-w-7xl mx-auto mt-10">
@@ -23,36 +24,42 @@ const DetailsPage = async ({ params }) => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <EditUser data={data}></EditUser>
-          <AlertDialogBox data={data} deleteData={deleteData}></AlertDialogBox>
+          <EditUser data={information}></EditUser>
+          <AlertDialogBox
+            data={information}
+            deleteData={deleteData}
+          ></AlertDialogBox>
         </div>
       </div>
 
-      <div>
+      <div className="mb-20">
         <Image
-          src={data.imageUrl}
+          src={information.imageUrl}
           width={1024}
           height={992}
           alt="This is details image"
           className="w-full h-auto object-cover"
           priority
         ></Image>
-        <div>
-          <div className="flex items-center gap-2">
-            <GrLocation />
-            {data.country}
-          </div>
-          <h2 className="text-[60px]">{data.destinationName}</h2>
-
-          <div className="mb-10">
-            <h2 className="text-[30px]">Overview</h2>
-            <p>{data.description}</p>
-          </div>
-
+        <div className="flex justify-between">
           <div>
-            <h2 className="text-[30px]">Highlights</h2>
-            <p>{data.description}</p>
+            <div className="flex items-center gap-2">
+              <GrLocation />
+              {information.country}
+            </div>
+            <h2 className="text-[60px]">{information.destinationName}</h2>
+
+            <div className="mb-10">
+              <h2 className="text-[30px]">Overview</h2>
+              <p>{information.description}</p>
+            </div>
+
+            <div>
+              <h2 className="text-[30px]">Highlights</h2>
+              <p>{information.description}</p>
+            </div>
           </div>
+          <MyDestination information={information}></MyDestination>
         </div>
       </div>
     </div>
