@@ -12,6 +12,7 @@ const MyBookingPage = async () => {
 
   const res = await fetch(`http://localhost:5000/product/${info?.id}`);
   const data = await res.json();
+  console.log(data);
 
   return (
     <div className="max-w-7xl mx-auto mt-15">
@@ -37,6 +38,7 @@ const MyBookingPage = async () => {
                     width={200}
                     height={200}
                     alt="This is booking image"
+                    unoptimized
                   ></Image>
                   <div>
                     <h3 className="font-semibold text-[40px] text-[#0C0B0B]">

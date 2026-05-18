@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   FieldError,
   Input,
@@ -11,27 +12,34 @@ import {
   Button,
   Card,
 } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-const addDestinationPage = () => {
+const AddDestinationPage = () => {
+  const router = useRouter();
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData.entries());
 
+    const tokenResponse = await authClient.token();
+    const token = tokenResponse?.data?.token || tokenResponse?.token;
+
     const res = await fetch(`http://localhost:5000/destination`, {
       method: "POST",
       body: JSON.stringify(formObject),
       headers: {
         "Content-type": "application/json",
+        authorization: `Bearer ${token}`,
       },
     });
+
     const data = await res.json();
     form.reset();
     toast.success("Added user successfully");
-    redirect("/allDestination");
+    router.push("/allDestination");
   };
 
   return (
@@ -161,4 +169,4 @@ const addDestinationPage = () => {
   );
 };
 
-export default addDestinationPage;
+export default AddDestinationPage;
